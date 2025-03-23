@@ -1,5 +1,5 @@
 <?php
-
+// Let instructors see their past sections and students if they have their password
 $iid = $_POST['instructor_id'];
 $pid = $_POST['password'];
 
@@ -27,6 +27,7 @@ if (mysqli_stmt_num_rows($stmt) == 0) {
 }
 mysqli_stmt_close($stmt);
 
+// Check that the person is authorized to perform this query
 $password_query =
     "SELECT password
     FROM account
@@ -47,15 +48,14 @@ if ($pid != $password) {
     exit;
 }
 
-
 $sections_query =
     "SELECT course_id, section_id, semester, year
     FROM section
     WHERE instructor_id = '$iid'";
 $sections_result = mysqli_query($myconnection, $sections_query) or die("Query failed: " . mysqli_error($myconnection));
 
+// Loop through all the sections the instructor has taught/is teaching and the student info
 while ($row = mysqli_fetch_array($sections_result, MYSQLI_ASSOC)) {
-    // get course name and credits
     $course_fetch = $row["course_id"];
     $section_fetch = $row["section_id"];
     $semester_fetch = $row["semester"];
