@@ -23,8 +23,9 @@
                     <input type="text" name="email" size="32" maxlength="32" />
                 </td>
             </tr>
+            <!-- Add "Current Password" field and logic to verify password before applying account changes -->
             <tr bgcolor="#cccccc">
-                <td>Password:</td>
+                <td>New Password:</td>
                 <td align="left">
                     <input type="text" name="password" size="32" maxlength="32" />
                 </td>
@@ -158,7 +159,7 @@
 
     <!--  9. Student-proposed functionality #1 - Club stuff -->
     <h3>Create a club</h3>
-    <form action="item9.php" method="post">
+    <form action="item9create.php" method="post">
         <table border="0">
             <tr bgcolor="#cccccc">
                 <td>Advisor's Instructor ID:</td>
@@ -187,6 +188,64 @@
             <tr bgcolor="#cccccc">
                 <td colspan="2" align="center">
                     <input type="submit" value="Create Club" />
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <h3>Join a club</h3>
+    <form action="item9join.php" method="post">
+        <table border="0">
+            <tr bgcolor="#cccccc">
+                <td>Club Name:</td>
+                <td align="left">
+                    <input type="text" name="club_name" size="32" maxlength="32" />
+                </td>
+            </tr>
+            <tr bgcolor="#cccccc">
+                <td>Student ID:</td>
+                <td align="left">
+                    <input type="text" name="student_id" size="32" maxlength="32" />
+                </td>
+            </tr>
+            <tr bgcolor="#cccccc">
+                <td>Password:</td>
+                <td align="left">
+                    <input type="text" name="password" size="32" maxlength="32" />
+                </td>
+            </tr>
+            <tr bgcolor="#cccccc">
+                <td colspan="2" align="center">
+                    <input type="submit" value="Join Club" />
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <h3>Leave a club</h3>
+    <form action="item9leave.php" method="post">
+        <table border="0">
+            <tr bgcolor="#cccccc">
+                <td>Club Name:</td>
+                <td align="left">
+                    <input type="text" name="club_name" size="32" maxlength="32" />
+                </td>
+            </tr>
+            <tr bgcolor="#cccccc">
+                <td>Student ID:</td>
+                <td align="left">
+                    <input type="text" name="student_id" size="32" maxlength="32" />
+                </td>
+            </tr>
+            <tr bgcolor="#cccccc">
+                <td>Password:</td>
+                <td align="left">
+                    <input type="text" name="password" size="32" maxlength="32" />
+                </td>
+            </tr>
+            <tr bgcolor="#cccccc">
+                <td colspan="2" align="center">
+                    <input type="submit" value="Leave Club" />
                 </td>
             </tr>
         </table>

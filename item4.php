@@ -67,6 +67,9 @@ while ($row = mysqli_fetch_array($take_result, MYSQLI_ASSOC)) {
 degreeCredits('undergraduate', $id, $GPA, $myconnection);
 degreeCredits('master', $id, $GPA, $myconnection);
 
+// close mysql connection
+mysqli_close($myconnection);
+
 function degreeCredits($degree, $id, $GPA, $connection)
 {
     // fetch the student's total credits

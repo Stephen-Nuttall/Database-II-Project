@@ -184,7 +184,7 @@ create table take
 
 -- New Tables
 create table club
-	(name		    varchar(20),
+	(name		    varchar(32),
      club_id        varchar(10) not null,
 	 advisor_id     varchar(10),
      president_id   varchar(10),
@@ -198,7 +198,6 @@ create table club
 create table clubParticipants
 	(student_id     varchar(10) not null,
      club_id        varchar(10) not null,
-     role           varchar(20),
 	 primary key(student_id, club_id),
      foreign key (student_id) references student (student_id)
 		on delete cascade,
