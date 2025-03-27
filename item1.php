@@ -6,17 +6,19 @@
 // get HTML form info
 $id = $_POST['student_id'];
 $email = $_POST['email'];
-$password = $_POST['password'];
+$old_password = $_POST['current_password'];
+$new_password = $_POST['new_password'];
 $name = $_POST['name'];
 $degree = $_POST['degree'];
 $dept = $_POST['dept'];
 
 // establish mysql connection
-$myconnection = mysqli_connect('localhost', 'root', '') or die('Could not connect: ' . mysql_error());
+$myconnection = mysqli_connect('localhost', 'root', '') or die('Could not connect: ' . mysqli_error($myconnection));
 $mydb = mysqli_select_db($myconnection, 'db2') or die('Could not select database');
 
 /*
  * CREATING QUERY STRINGS
+ * This is only possible to do all up front because none of the information inserted into these strings will change before they're used.
  */
 // create query strings for account table
 $account_query =
@@ -26,11 +28,11 @@ $account_query =
 
 $account_insert =
     "INSERT into account (email, password, type)
-    values ('$email', '$password', 'student')";
+    values ('$email', '$new_password', 'student')";
 
 $account_update =
     "UPDATE account
-    SET password = '$password'
+    SET password = '$new_password'
     WHERE email = '$email'";
 
 // create query strings for student table
@@ -63,50 +65,52 @@ $phd_insert =
  * INSERT OR UPDATE ACCOUNT TABLE 
  */
 // see if there is already an account with the same email
-$account_found = mysqli_query($myconnection, $account_query) or die('Query failed: ' . mysql_error());
+$account_result = mysqli_query($myconnection, $account_query) or die('Query failed: ' . mysqli_error($myconnection));
 
 // if there isn't already an account with this email, insert a new entry for this email and password.
 // else, update the account's password to match the user input.
-if (is_null(mysqli_fetch_array($account_found, MYSQLI_ASSOC))) {
-    mysqli_query($myconnection, $account_insert) or die('Query failed: ' . mysql_error());
+$account_fetch = mysqli_fetch_array($account_result, MYSQLI_ASSOC);
+if (is_null($account_fetch)) {
+    mysqli_query($myconnection, $account_insert) or die('Query failed: ' . mysqli_error($myconnection));
     echo "Account created successfully!\n";
 } else {
-    mysqli_query($myconnection, $account_update) or die('Query failed: ' . mysql_error());
-    echo "Account updated successfully!\n";
+    if ($account_fetch["password"] == $old_password) {
+        mysqli_query($myconnection, $account_update) or die('Query failed: ' . mysqli_error($myconnection));
+        echo "Account updated successfully!\n";
+    } else {
+        echo "Account could not be updated. Incorrect password.\n";
+        return;
+    }
 }
 
 /*
  * INSERT OR UPDATE STUDENT TABLE (and undergrad/master/phd)
  */
 // see if there is already an account with the same id
-$student_found = mysqli_query($myconnection, $student_query) or die('Query failed: ' . mysql_error());
+$student_found = mysqli_query($myconnection, $student_query) or die('Query failed: ' . mysqli_error($myconnection));
 
 // if there isn't already a student with this id, insert a new entry for this information.
 // else, update the student information to match the user input.
 if (is_null(mysqli_fetch_array($student_found, MYSQLI_ASSOC))) {
-    mysqli_query($myconnection, $student_insert) or die('Query failed: ' . mysql_error());
+    mysqli_query($myconnection, $student_insert) or die('Query failed: ' . mysqli_error($myconnection));
 
     if ($degree == 'undergraduate') {
-        mysqli_query($myconnection, $undergrad_insert) or die('Query failed: ' . mysql_error());
+        mysqli_query($myconnection, $undergrad_insert) or die('Query failed: ' . mysqli_error($myconnection));
         echo "Undergraduate Student information created successfully!\n";
     } else if ($degree == 'master') {
-        mysqli_query($myconnection, $master_insert) or die('Query failed: ' . mysql_error());
+        mysqli_query($myconnection, $master_insert) or die('Query failed: ' . mysqli_error($myconnection));
         echo "Master Student information created successfully!\n";
     } else if ($degree == 'phd') {
-        mysqli_query($myconnection, $phd_insert) or die('Query failed: ' . mysql_error());
+        mysqli_query($myconnection, $phd_insert) or die('Query failed: ' . mysqli_error($myconnection));
         echo "PhD Student information created successfully!\n";
     } else {
         echo "ERROR: could not add to undergraduate, master, or phd table.\n";
     }
 
-    echo "!";
-
 } else {
-    mysqli_query($myconnection, $student_update) or die('Query failed: ' . mysql_error());
+    mysqli_query($myconnection, $student_update) or die('Query failed: ' . mysqli_error($myconnection));
     echo "Student information updated successfully!\n";
 }
 
 // close mysql connection
 mysqli_close($myconnection);
-
-?>

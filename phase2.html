@@ -9,6 +9,9 @@
 
     <!--  1. A student can create an account and modify their information later. -->
     <h3>Create or modify a student account</h3>
+    If the email provided does not have an account, a new account will be created.<br>
+    If you are creating an account, you do not need to enter a current password.<br>
+    If you are modifying an account, please enter your email and current password.
     <form action="item1.php" method="post">
         <table border="0">
             <tr bgcolor="#cccccc">
@@ -23,11 +26,16 @@
                     <input type="text" name="email" size="32" maxlength="32" />
                 </td>
             </tr>
-            <!-- Add "Current Password" field and logic to verify password before applying account changes -->
+            <tr bgcolor="#cccccc">
+                <td>Current Password:</td>
+                <td align="left">
+                    <input type="text" name="current_password" size="32" maxlength="32" />
+                </td>
+            </tr>
             <tr bgcolor="#cccccc">
                 <td>New Password:</td>
                 <td align="left">
-                    <input type="text" name="password" size="32" maxlength="32" />
+                    <input type="text" name="new_password" size="32" maxlength="32" />
                 </td>
             </tr>
             <tr bgcolor="#cccccc">
