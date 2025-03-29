@@ -1,6 +1,7 @@
 
 <?php include 'item2.php'; ?>
 <?php include 'item3.php'; ?>
+<?php include 'item6.php'; ?>
 <html>
 
 <head>
@@ -49,7 +50,7 @@
         </td>
       </tr>
       <tr bgcolor="#cccccc">
-        <td>Deptartment:</td>
+        <td>Department:</td>
         <td align="left">
           <select name="dept">
             <option value="Miner School of Computer & Information Sciences">
@@ -70,7 +71,7 @@
         two sections per time slot. Each instructor teaches one or two sections per semester.
         Should an instructor be assigned two sections, the two sections must be scheduled in
         consecutive time slots. -->
-  <h3>Create A new course section</h3>
+  <h3>Create a new course section</h3>
   <form action="item2.php" method="POST">
     <table border="0">
       <tr>
@@ -117,11 +118,7 @@
         </td>
       </tr>
 
-
-
       <tr>
-
-        
           <td bgcolor="#cccccc">
             <label for="classroom">Classroom:</label>
           </td>
@@ -130,12 +127,9 @@
             <?php echo $classrooms; ?>
             </select>
           </td>
-          
-
       </tr>
 
       <tr>
-
         <td bgcolor="#cccccc">
           <label for="timeslot">Timeslot:</label>
         </td>
@@ -145,8 +139,6 @@
           <?php echo $timeslots; ?>
           </select>
         </td>
-
-
       </tr>
 
       
@@ -182,7 +174,6 @@
           </td>
           </tr>
 
-
           <tr>
           <td bgcolor="#cccccc">
             <label for="sections">Sections:</label>
@@ -195,9 +186,9 @@
           </tr>
 
         <tr>
-           <td bgcolor="#cccccc">
-          <button type="submit">Register</button>
-        </td>
+            <td bgcolor="#cccccc">
+            <button type="submit">Register</button>
+            </td>
         </tr>
           
           </table>
@@ -227,20 +218,192 @@
         names of current semester's enrolled students and the names and grades of students
         from past semesters. -->
 
+    <h3>View instructor records</h3>
+    <form action="item5.php" method="post">
+        <table border="0">
+            <tr bgcolor="#cccccc">
+                <td>Instructor ID:</td>
+                <td align="left">
+                    <input type="text" name="instructor_id" size="32" maxlength="32" />
+                </td>
+            </tr>
+
+            <tr bgcolor="#cccccc">
+                <td>Password:</td>
+                <td align="left">
+                    <input type="text" name="password" size="32" maxlength="32" />
+                </td>
+            </tr>
+            <tr bgcolor="#cccccc">
+                <td colspan="2" align="center">
+                    <input type="submit" value="View instructor records" />
+                </td>
+            </tr>
+        </table>
+    </form>
+
   <!--  6. Teaching Assistants (TAs), who are PhD students, will be assigned by the admin to
         sections with more than 10 students. A PhD student is eligible to be a TA for only one
         section. -->
+
+    <h3>Add PhD student as TA</h3>
+    <form action="item6.php" method="post">
+        <table border="0">
+            <tr bgcolor="#cccccc">
+                <td>Admin Email:</td>
+                <td align="left">
+                    <input type="text" name="email" size="32" maxlength="32" />
+                </td>
+            </tr>
+
+            <tr bgcolor="#cccccc">
+                <td>Password:</td>
+                <td align="left">
+                    <input type="text" name="password" size="32" maxlength="32" />
+                </td>
+            </tr>
+
+            <tr bgcolor="#cccccc">
+                <td>Student ID:</td>
+                <td align="left">
+                    <input type="text" name="student_id" size="32" maxlength="32" />
+                </td>
+            </tr>
+
+            <tr>
+                <td align="left" bgcolor="#cccccc">
+                    <label for="year">Year:</label></td>
+                <td><?= $this_year ?></td>
+            </tr>
+
+            <tr>
+                <td align="left" bgcolor="#cccccc">
+                    <label for="semester">Semester:</label></td>
+                <td><?= $this_semester ?></td>
+            </tr>
+
+            <tr>
+                <td bgcolor="#cccccc">
+                    <label for="sections">Sections:</label>
+                </td>
+                <td>
+                    <select name="section" id="section" required>
+                        <?php echo $these_sections; ?>
+                    </select>
+                </td>
+            </tr>
+
+            <tr bgcolor="#cccccc">
+                <td colspan="2" align="center">
+                    <input type="submit" value="Add TA"/>
+                </td>
+            </tr>
+        </table>
+    </form>
 
   <!--  7. Grader positions for sections with 5 to 10 students will be assigned by the admin with
         either MS students or undergraduate students who have got A- or A in the course. If
         there are more than one qualified candidates, the admin will choose one as the grader.
         A student may serve as a grader for only one section. -->
 
-  <!--  8. he admin or instructor can appoint one or two instructors as advisor(s) for PhD
+  <!--  8. The admin or instructor can appoint one or two instructors as advisor(s) for PhD
         students, including a start date, and optional end date. The advisor will be able to view
         the course history of their advisees, and update their advisees’ information. -->
 
-  <!--  9. Student-proposed functionality #1 -->
+    <!--  9. Student-proposed functionality #1 - Club stuff -->
+        <!--  9. Student-proposed functionality #1 - Club stuff -->
+        <h3>Create a club</h3>
+    <form action="item9create.php" method="post">
+        <table border="0">
+            <tr bgcolor="#cccccc">
+                <td>Advisor's Instructor ID:</td>
+                <td align="left">
+                    <input type="text" name="instructor_id" size="32" maxlength="32" />
+                </td>
+            </tr>
+            <tr bgcolor="#cccccc">
+                <td>Password:</td>
+                <td align="left">
+                    <input type="text" name="password" size="32" maxlength="32" />
+                </td>
+            </tr>
+            <tr bgcolor="#cccccc">
+                <td>Club Name:</td>
+                <td align="left">
+                    <input type="text" name="club_name" size="32" maxlength="32" />
+                </td>
+            </tr>
+            <tr bgcolor="#cccccc">
+                <td>President's Student ID:</td>
+                <td align="left">
+                    <input type="text" name="president_id" size="32" maxlength="32" />
+                </td>
+            </tr>
+            <tr bgcolor="#cccccc">
+                <td colspan="2" align="center">
+                    <input type="submit" value="Create Club" />
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <h3>Join a club</h3>
+    <form action="item9join.php" method="post">
+        <table border="0">
+            <tr bgcolor="#cccccc">
+                <td>Club Name:</td>
+                <td align="left">
+                    <input type="text" name="club_name" size="32" maxlength="32" />
+                </td>
+            </tr>
+            <tr bgcolor="#cccccc">
+                <td>Student ID:</td>
+                <td align="left">
+                    <input type="text" name="student_id" size="32" maxlength="32" />
+                </td>
+            </tr>
+            <tr bgcolor="#cccccc">
+                <td>Password:</td>
+                <td align="left">
+                    <input type="text" name="password" size="32" maxlength="32" />
+                </td>
+            </tr>
+            <tr bgcolor="#cccccc">
+                <td colspan="2" align="center">
+                    <input type="submit" value="Join Club" />
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <h3>Leave a club</h3>
+    <form action="item9leave.php" method="post">
+        <table border="0">
+            <tr bgcolor="#cccccc">
+                <td>Club Name:</td>
+                <td align="left">
+                    <input type="text" name="club_name" size="32" maxlength="32" />
+                </td>
+            </tr>
+            <tr bgcolor="#cccccc">
+                <td>Student ID:</td>
+                <td align="left">
+                    <input type="text" name="student_id" size="32" maxlength="32" />
+                </td>
+            </tr>
+            <tr bgcolor="#cccccc">
+                <td>Password:</td>
+                <td align="left">
+                    <input type="text" name="password" size="32" maxlength="32" />
+                </td>
+            </tr>
+            <tr bgcolor="#cccccc">
+                <td colspan="2" align="center">
+                    <input type="submit" value="Leave Club" />
+                </td>
+            </tr>
+        </table>
+    </form>
 
   <!--  10. Student-proposed functionality #2 -->
 </body>
