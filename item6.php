@@ -122,7 +122,7 @@ $stmt->bind_param("s", $sid);
 $stmt->execute();
 $stmt->store_result();
 if ($stmt->num_rows == 0) {
-    echo "There is no PhD Student with this ID.";
+    echo "There is no PhD student with this ID.";
     $myconnection->close();
     exit;
 }
@@ -132,7 +132,8 @@ $phd_availablity_query =
     "SELECT *
     FROM ta
     WHERE student_id = ?";
-$stmt = $myconnection->prepare($student_id_query);
+
+$stmt = $myconnection->prepare($phd_availablity_query);
 $stmt->bind_param("s", $sid);
 $stmt->execute();
 $stmt->store_result();
@@ -143,10 +144,27 @@ if ($stmt->num_rows != 0) {
 }
 $stmt->close();
 
+$section_open_query =
+    "SELECT *
+    FROM ta
+    WHERE course_id = ? AND section_id = ? AND semester = ? AND year = ?";
+
+$stmt = $myconnection->prepare($section_open_query);
+$stmt->bind_param("sssd", $course_id, $section_id, $this_semester, $this_year);
+$stmt->execute();
+$stmt->store_result();
+if ($stmt->num_rows != 0) {
+    echo "This section already has a TA.";
+    $myconnection->close();
+    exit;
+}
+$stmt->close();
+
 $section_size_query =
     "SELECT COUNT(*)
     FROM take
     where course_id = ? AND section_id = ? AND semester = ? AND year = ?";
+
 $stmt = $myconnection->prepare($section_size_query);
 $stmt->bind_param("sssd", $course_id, $section_id, $this_semester, $this_year);
 $stmt->execute();
@@ -154,9 +172,21 @@ $stmt->bind_result($size);
 $stmt->fetch();
 $stmt->close();
 
-if ($size < 1) {
+if ($size < 10) {
     echo "There need to be at least 10 students in a section to get a TA.";
+    $myconnection->close();
+    exit;
 }
-else {
-    echo 'The student has been added as a TA to the chosen selection.';
+
+$ta_insert =
+    "INSERT INTO ta
+    VALUES (?, ?, ?, ?, ?)";
+    
+$stmt = $myconnection->prepare($ta_insert);
+$stmt->bind_param("ssssd", $sid, $course_id, $section_id, $this_semester, $this_year);
+if ($stmt->execute()) {
+    echo 'The student has been added as a TA to the chosen section.';
+} else {
+    echo 'Insert failed, student could not be added.';
 }
+$myconnection->close();
