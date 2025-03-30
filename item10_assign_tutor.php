@@ -441,7 +441,6 @@ function is_there_an_overlaping_time_between_tutoring_sessions(
     $tutoring_end_time,
     $assignment_id = null
 ) {
-    echo ("assignment id : " . $assignment_id );
     $query = "SELECT * 
               FROM tutor_assignments
               JOIN hours AS start_hour ON tutor_assignments.start_hour_id = start_hour.hour_id
