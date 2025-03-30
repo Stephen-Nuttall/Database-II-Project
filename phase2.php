@@ -457,6 +457,39 @@
         </table>
     </form>
 
+    <h3>Update Advisee Information</h3>
+    <form action="item8update.php" method="post">
+        <table border="0">
+            <tr bgcolor="#cccccc">
+                <td>Advisee Email:</td>
+                <td align="left">
+                    <input type="text" name="email" size="32" maxlength="32" />
+                </td>
+            </tr>
+
+            <tr bgcolor="#cccccc">
+                <td>Password:</td>
+                <td align="left">
+                    <input type="text" name="password" size="32" maxlength="32" />
+                </td>
+            </tr>
+
+            <tr bgcolor="#cccccc">
+                <td>Student ID:</td>
+                <td align="left">
+                    <input type="text" name="student_id" size="32" maxlength="32" />
+                </td>
+            </tr>
+
+            <tr bgcolor="#cccccc">
+                <td colspan="2" align="center">
+                    <input type="submit" value="Update Information"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+
     <!--  9. Student-proposed functionality #1 - Club stuff -->
         <!--  9. Student-proposed functionality #1 - Club stuff -->
     <h3>Create a Club</h3>
