@@ -31,7 +31,7 @@ if (empty($email) or empty($password_attempt) or empty($sid) or empty($iid) or e
     exit;
 }
 
-// Check if the email exists and belongs to and admin or instructor
+// Check if the email exists and belongs to an admin or instructor
 $email_query =
     "SELECT *
     FROM account
