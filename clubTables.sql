@@ -1,6 +1,6 @@
 -- This only has the SQL to add the new club-related tables to the schema in phpMyAdmin.
 -- Don't submit this file. Submit DB2-tables.sql instead.
--- Make sure if you create new tables to make the SQL code for them in DB-talbes.sql.
+-- Make sure if you create new tables to make the SQL code for them in DB2-tables.sql.
 
 create table club
 	(name		    varchar(32),

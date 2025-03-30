@@ -18,9 +18,11 @@ if ($myconnection->connect_error) {
 $email = $_POST["email"];
 $password_attempt = $_POST["password"];
 $sid = $_POST["student_id"];
+$proposal = $_POST["proposal_date"];
+$dissertation = $_POST["dissertation_date"];
 
-if (empty($email) or empty($password_attempt) or empty($sid)) {
-    echo "Please fill out all the fields!";
+if (empty($email) || empty($password_attempt) || empty($sid) || (empty($proposal) && empty($dissertation))) {
+    echo "Please fill out the email, password, and student ID fields, as well as at least one of the dates!";
     exit;
 }
 
@@ -77,19 +79,19 @@ if ($stmt->num_rows == 0) {
 }
 $stmt->close();
 
-$course_history_query =
-    "SELECT course_id, section_id, semester, year, grade
-    FROM take
+$dates_query =
+    "SELECT proposal_defence_date, dissertation_defence_date
+    FROM phd
     WHERE student_id = ?";
-$stmt = $myconnection->prepare($course_history_query);
+$stmt = $myconnection->prepare($dates_query);
 
 $stmt->bind_param("s", $sid);
 $stmt->execute();
 $stmt->store_result();
-$stmt->bind_result($course_id, $section_id, $semester, $year, $grade);
-echo "Course ID &emsp; &emsp; Section ID &emsp; &emsp; Semester &emsp; &emsp; Year &emsp; &emsp; Grade<br>";
+$stmt->bind_result($current_proposal, $current_dissertation);
+
 while ($stmt->fetch()) {
-    echo htmlspecialchars($course_id) . " &emsp; &emsp; " . htmlspecialchars($section_id) . " &emsp; &emsp; " . htmlspecialchars($semester) . " &emsp; &emsp; " . htmlspecialchars($year) . " &emsp; &emsp; &emsp;" . htmlspecialchars($grade) . "<br>";
+    echo htmlspecialchars($current_proposal) . " &emsp; &emsp; " . htmlspecialchars($current_dissertation) . "<br>";
 }
 $stmt->close();
 $myconnection->close();
