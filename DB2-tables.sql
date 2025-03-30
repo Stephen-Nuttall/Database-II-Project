@@ -243,3 +243,4 @@ insert into section (course_id, section_id, semester, year) value ('COMP1020', '
 insert into section (course_id, section_id, semester, year) value ('COMP2010', 'Section101', 'Fall', 2023);
 insert into section (course_id, section_id, semester, year) value ('COMP2010', 'Section102', 'Fall', 2023);
 insert into section (course_id, section_id, semester, year) value ('COMP2040', 'Section201', 'Spring', 2024);
+

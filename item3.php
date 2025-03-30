@@ -88,7 +88,7 @@ else{
 }
 
 
-//Check is student exists
+//Check if student exists
 $query_check_if_student_exist = "SELECT student_id FROM student WHERE student_id=?";
 $stmt = $conn->prepare($query_check_if_student_exist);
 $stmt->bind_param("s", $student_id); 
@@ -147,11 +147,11 @@ $is_already_registered = $result->num_rows > 0;
 
 function can_register($are_prerequisites_satisfied, $is_space_available_in_section, $is_already_registered){
   if(!$are_prerequisites_satisfied){
-    echo ("Prerequisits should be taken before registering for this section.");
+    echo ("Prerequisites should be taken before registering for this section.");
     return false;
   }
   if(!$is_space_available_in_section){
-    echo("No available position,the section is already full.");
+    echo("No available position, the section is already full.");
     return false;
   }
   if($is_already_registered){
@@ -192,14 +192,14 @@ function can_register($are_prerequisites_satisfied, $is_space_available_in_secti
 
 if(can_register($are_prerequisites_satisfied, $is_space_available_in_section, $is_already_registered)){
   if(register($conn, $student_id, $course_id, $section_id, $current_semester, $current_year, $grade = null)){
-    echo("Successfull Registeration.");
+    echo(" Successful Registration.");
   }
   else{
-    echo("Failed Registeration.");
+    echo(" Failed Registration.");
   }
 }
 else{
-  echo("Cannot Register for this section.");
+  echo(" Cannot register for this section.");
 }
 
 ?>
