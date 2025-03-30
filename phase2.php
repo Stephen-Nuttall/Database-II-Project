@@ -12,7 +12,7 @@
   <h1>University Database</h1>
 
   <!--  1. A student can create an account and modify their information later. -->
-  <h3>Create or modify a student account</h3>
+  <h3>Create or Modify a Student Account</h3>
   <form action="item1.php" method="post">
     <table border="0">
       <tr bgcolor="#cccccc">
@@ -71,7 +71,7 @@
         two sections per time slot. Each instructor teaches one or two sections per semester.
         Should an instructor be assigned two sections, the two sections must be scheduled in
         consecutive time slots. -->
-  <h3>Create A new course section</h3>
+  <h3>Create a New Course Section</h3>
   <form action="item2.php" method="POST">
     <table border="0">
       <tr>
@@ -164,7 +164,7 @@
   <!--  3. A student can browse all the courses offered in the current semester and can register for
         a specific section of a course if they satisfy the prerequisite conditions and there is
         available space in the section. (Assume each section is limited to 15 students). -->
-  <h3>Register for a section</h3>
+  <h3>Register for a Section</h3>
   <form action="item3.php" method="post">
     <table border="0">
       <tr>
@@ -211,7 +211,7 @@
 
   <!--  4. A student can view a list of all courses they have taken and are currently taking, along
         with the total number of credits earned and their cumulative GPA. -->
-  <h3>View courses</h3>
+  <h3>View Courses</h3>
   <form action="item4.php" method="post">
     <table border="0">
       <tr bgcolor="#cccccc">
@@ -472,7 +472,7 @@
     </form>
 
     <h3>Update Advisee Information</h3>
-    <form action="item8view.php" method="post">
+    <form action="item8update.php" method="post">
         <table border="0">
             <tr bgcolor="#cccccc">
                 <td>Advisee Email:</td>
@@ -498,14 +498,14 @@
             <tr bgcolor="#cccccc">
                 <td>Proposal Defence Date:</td>
                 <td align="left">
-                    <input type="date" name="start_date" size="32" maxlength="32" />
+                    <input type="date" name="proposal_date" size="32" maxlength="32" />
                 </td>
             </tr>
 
             <tr bgcolor="#cccccc">
                 <td>Dissertation Date:</td>
                 <td align="left">
-                    <input type="date" name="end_date" size="32" maxlength="32" />
+                    <input type="date" name="dissertation_date" size="32" maxlength="32" />
                 </td>
             </tr>
 

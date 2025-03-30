@@ -21,8 +21,8 @@ $sid = $_POST["student_id"];
 $proposal = $_POST["proposal_date"];
 $dissertation = $_POST["dissertation_date"];
 
-if (empty($email) || empty($password_attempt) || empty($sid) || (empty($proposal) && empty($dissertation))) {
-    echo "Please fill out the email, password, and student ID fields, as well as at least one of the dates!";
+if (empty($email) || empty($password_attempt) || empty($sid)) {
+    echo "Please fill out the email, password, and student ID fields!";
     exit;
 }
 
@@ -79,19 +79,49 @@ if ($stmt->num_rows == 0) {
 }
 $stmt->close();
 
+// Get current dates
 $dates_query =
     "SELECT proposal_defence_date, dissertation_defence_date
     FROM phd
     WHERE student_id = ?";
-$stmt = $myconnection->prepare($dates_query);
 
+$stmt = $myconnection->prepare($dates_query);
 $stmt->bind_param("s", $sid);
 $stmt->execute();
-$stmt->store_result();
 $stmt->bind_result($current_proposal, $current_dissertation);
+$stmt->fetch();
+$stmt->close();
 
-while ($stmt->fetch()) {
-    echo htmlspecialchars($current_proposal) . " &emsp; &emsp; " . htmlspecialchars($current_dissertation) . "<br>";
+//if (empty($proposal)) { $proposal = $current_proposal; }
+//if (empty($dissertation)) { $dissertation = $current_dissertation; }
+
+// Ensure the dissertation is after the defence (if dates are set)
+if ($proposal >= $dissertation && !empty($dissertation)) {
+    echo "The proposal defence date must be before the dissertation defence date.";
+    $myconnection->close();
+    exit;
+}
+
+$update_dates =
+    "UPDATE phd
+    SET proposal_defence_date = ?, dissertation_defence_date = ?
+    WHERE student_id = ?";
+
+$stmt = $myconnection->prepare($update_dates);
+$stmt->bind_param("sss", $proposal, $dissertation, $sid);
+$stmt->execute();
+if (!$stmt->execute()) {
+    'Update failed, advisee info could not be updated.';
+    $stmt->close();
+    $myconnection->close();
+    exit;
 }
 $stmt->close();
+
+echo "Old Proposal Defence Date: " . htmlspecialchars($current_proposal) . "<br>";
+echo "Old Dissertation Defence Date: ". htmlspecialchars($current_dissertation) . "<br><br>";
+echo "New Proposal Defence Date: " . htmlspecialchars($proposal) . "<br>";
+echo "New Dissertation Defence Date: ". htmlspecialchars($dissertation) . "<br>";
+echo "(Blank if none) <br>";
+
 $myconnection->close();
