@@ -301,7 +301,7 @@
         </table>
     </form>
 
-  <!--  7. Grader positions for sections with 5 to 10 students will be assigned by the admin with
+    <!--  7. Grader positions for sections with 5 to 10 students will be assigned by the admin with
         either MS students or undergraduate students who have got A- or A in the course. If
         there are more than one qualified candidates, the admin will choose one as the grader.
         A student may serve as a grader for only one section. -->
@@ -360,13 +360,74 @@
             </tr>
         </table>
     </form>
-  <!--  8. The admin or instructor can appoint one or two instructors as advisor(s) for PhD
+
+    <!--  8. The admin or instructor can appoint one or two instructors as advisor(s) for PhD
         students, including a start date, and optional end date. The advisor will be able to view
         the course history of their advisees, and update their advisees’ information. -->
 
+    <h3>Add Advisor(s) to PhD Student</h3>
+    <form action="item8.php" method="post">
+        <table border="0">
+            <tr bgcolor="#cccccc">
+                <td>Admin/Instructor Email:</td>
+                <td align="left">
+                    <input type="text" name="email" size="32" maxlength="32" />
+                </td>
+            </tr>
+
+            <tr bgcolor="#cccccc">
+                <td>Password:</td>
+                <td align="left">
+                    <input type="text" name="password" size="32" maxlength="32" />
+                </td>
+            </tr>
+
+            <tr bgcolor="#cccccc">
+                <td>Student ID:</td>
+                <td align="left">
+                    <input type="text" name="student_id" size="32" maxlength="32" />
+                </td>
+            </tr>
+
+            <tr bgcolor="#cccccc">
+                <td>Instructor ID:</td>
+                <td align="left">
+                    <input type="text" name="instructor_id" size="32" maxlength="32" />
+                </td>
+            </tr>
+
+            <tr bgcolor="#cccccc">
+                <td>(Optional) 2nd Instructor ID:</td>
+                <td align="left">
+                    <input type="text" name="instructor_id_2" size="32" maxlength="32" />
+                </td>
+            </tr>
+
+            <tr bgcolor="#cccccc">
+                <td>Start Date:</td>
+                <td align="left">
+                    <input type="date" name="start_date" size="32" maxlength="32" />
+                </td>
+            </tr>
+
+            <tr bgcolor="#cccccc">
+                <td>(Optional) End Date:</td>
+                <td align="left">
+                    <input type="date" name="end_date" size="32" maxlength="32" />
+                </td>
+            </tr>
+
+            <tr bgcolor="#cccccc">
+                <td colspan="2" align="center">
+                    <input type="submit" value="Add Advisor(s)"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+
     <!--  9. Student-proposed functionality #1 - Club stuff -->
         <!--  9. Student-proposed functionality #1 - Club stuff -->
-        <h3>Create a Club</h3>
+    <h3>Create a Club</h3>
     <form action="item9create.php" method="post">
         <table border="0">
             <tr bgcolor="#cccccc">
