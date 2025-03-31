@@ -5,10 +5,9 @@ create table account
 	 primary key(email)
 	);
 
-
 create table department
-	(dept_name	varchar(100), 
-	 location	varchar(100), 
+	(dept_name	varchar(100),
+	 location	varchar(100),
 	 primary key (dept_name)
 	);
 
@@ -16,45 +15,44 @@ create table instructor
 	(instructor_id		varchar(10),
 	 instructor_name	varchar(50) not null,
 	 title 			varchar(30),
-	 dept_name		varchar(100), 
+	 dept_name		varchar(100),
 	 email			varchar(50) not null,
 	 primary key (instructor_id)
 	);
 
-
 create table student
-	(student_id		varchar(10), 
-	 name			varchar(20) not null, 
+	(student_id		varchar(10),
+	 name			varchar(20) not null,
 	 email			varchar(50) not null,
-	 dept_name		varchar(100), 
+	 dept_name		varchar(100),
 	 primary key (student_id),
 	 foreign key (dept_name) references department (dept_name)
 		on delete set null
 	);
 
 create table PhD
-	(student_id			varchar(10), 
-	 qualifier			varchar(30), 
+	(student_id			varchar(10),
+	 qualifier			varchar(30),
 	 proposal_defence_date		date,
-	 dissertation_defence_date	date, 
+	 dissertation_defence_date	date,
 	 primary key (student_id),
 	 foreign key (student_id) references student (student_id)
 		on delete cascade
 	);
 
 create table master
-	(student_id		varchar(10), 
-	 total_credits		int,	
+	(student_id		varchar(10),
+	 total_credits		int,
 	 primary key (student_id),
 	 foreign key (student_id) references student (student_id)
 		on delete cascade
 	);
 
 create table undergraduate
-	(student_id		varchar(10), 
+	(student_id		varchar(10),
 	 total_credits		int,
 	 class_standing		varchar(10)
-		check (class_standing in ('Freshman', 'Sophomore', 'Junior', 'Senior')), 	
+		check (class_standing in ('Freshman', 'Sophomore', 'Junior', 'Senior')),
 	 primary key (student_id),
 	 foreign key (student_id) references student (student_id)
 		on delete cascade
@@ -77,21 +75,21 @@ create table time_slot
 	);
 
 create table course
-	(course_id		varchar(20), 
-	 course_name		varchar(50) not null, 
+	(course_id		varchar(20),
+	 course_name		varchar(50) not null,
 	 credits		numeric(2,0) check (credits > 0),
 	 primary key (course_id)
 	);
 
 create table section
 	(course_id		varchar(20),
-	 section_id		varchar(10), 
+	 section_id		varchar(10),
 	 semester		varchar(6)
-			check (semester in ('Fall', 'Winter', 'Spring', 'Summer')), 
-	 year			numeric(4,0) check (year > 1990 and year < 2100), 
+			check (semester in ('Fall', 'Winter', 'Spring', 'Summer')),
+	 year			numeric(4,0) check (year > 1990 and year < 2100),
 	 instructor_id		varchar(10),
 	 classroom_id   	varchar(8),
-	 time_slot_id		varchar(8),	
+	 time_slot_id		varchar(8),
 	 primary key (course_id, section_id, semester, year),
 	 foreign key (course_id) references course (course_id)
 		on delete cascade,
@@ -102,7 +100,7 @@ create table section
 	);
 
 create table prereq
-	(course_id		varchar(20), 
+	(course_id		varchar(20),
 	 prereq_id		varchar(20) not null,
 	 primary key (course_id, prereq_id),
 	 foreign key (course_id) references course (course_id)
@@ -125,13 +123,13 @@ create table advise
 create table TA
 	(student_id		varchar(10),
 	 course_id		varchar(8),
-	 section_id		varchar(10), 
+	 section_id		varchar(10),
 	 semester		varchar(6),
 	 year			numeric(4,0),
 	 primary key (student_id, course_id, section_id, semester, year),
 	 foreign key (student_id) references PhD (student_id)
 		on delete cascade,
-	 foreign key (course_id, section_id, semester, year) references 
+	 foreign key (course_id, section_id, semester, year) references
 	     section (course_id, section_id, semester, year)
 		on delete cascade
 );
@@ -139,13 +137,13 @@ create table TA
 create table masterGrader
 	(student_id		varchar(10),
 	 course_id		varchar(8),
-	 section_id		varchar(10), 
+	 section_id		varchar(10),
 	 semester		varchar(6),
 	 year			numeric(4,0),
 	 primary key (student_id, course_id, section_id, semester, year),
 	 foreign key (student_id) references master (student_id)
 		on delete cascade,
-	 foreign key (course_id, section_id, semester, year) references 
+	 foreign key (course_id, section_id, semester, year) references
 	     section (course_id, section_id, semester, year)
 		on delete cascade
 );
@@ -153,27 +151,27 @@ create table masterGrader
 create table undergraduateGrader
 	(student_id		varchar(10),
 	 course_id		varchar(8),
-	 section_id		varchar(10), 
+	 section_id		varchar(10),
 	 semester		varchar(6),
 	 year			numeric(4,0),
 	 primary key (student_id, course_id, section_id, semester, year),
 	 foreign key (student_id) references undergraduate (student_id)
 		on delete cascade,
-	 foreign key (course_id, section_id, semester, year) references 
+	 foreign key (course_id, section_id, semester, year) references
 	     section (course_id, section_id, semester, year)
 		on delete cascade
 );
 
 create table take
-	(student_id		varchar(10), 
+	(student_id		varchar(10),
 	 course_id		varchar(8),
-	 section_id		varchar(10), 
+	 section_id		varchar(10),
 	 semester		varchar(6),
 	 year			numeric(4,0),
 	 grade		    	varchar(2)
-		check (grade in ('A+', 'A', 'A-','B+', 'B', 'B-','C+', 'C', 'C-','D+', 'D', 'D-','F')), 
+		check (grade in ('A+', 'A', 'A-','B+', 'B', 'B-','C+', 'C', 'C-','D+', 'D', 'D-','F')),
 	 primary key (student_id, course_id, section_id, semester, year),
-	 foreign key (course_id, section_id, semester, year) references 
+	 foreign key (course_id, section_id, semester, year) references
 	     section (course_id, section_id, semester, year)
 		on delete cascade,
 	 foreign key (student_id) references student (student_id)
@@ -274,12 +272,7 @@ INSERT INTO instructor (instructor_id, instructor_name, title, dept_name, email)
 ('2', 'Sirong Lin', 'Associate Teaching Professor', 'Miner School of Computer & Information Sciences', 'slin@cs.uml.edu'),
 ('3', 'Yelena Rykalova', 'Associate Teaching Professor', 'Miner School of Computer & Information Sciences', 'Yelena_Rykalova@uml.edu'),
 ('4', 'Johannes Weis', 'Assistant Teaching Professor', 'Miner School of Computer & Information Sciences', 'Johannes_Weis@uml.edu'),
-('5', 'Tom Wilkes', 'Assistant Teaching Professor', 'Miner School of Computer & Information Sciences', 'Charles_Wilkes@uml.edu'),
-('6', 'Emily Johnson', 'Assistant Professor', 'Department of Mathematics', 'emily_johnson@uml.edu'),
-('7', 'Michael Brown', 'Associate Professor', 'Department of Physics', 'michael_brown@uml.edu'),
-('8', 'Jessica Davis', 'Professor', 'Miner School of Computer & Information Sciences', 'jessica_davis@uml.edu'),
-('9', 'Daniel Wilson', 'Assistant Professor', 'Department of Mathematics', 'daniel_wilson@uml.edu'),
-('10', 'Olivia Martinez', 'Associate Professor', 'Department of Physics', 'olivia_martinez@uml.edu');
+('5', 'Tom Wilkes', 'Assistant Teaching Professor', 'Miner School of Computer & Information Sciences', 'Charles_Wilkes@uml.edu');
 
 INSERT INTO student (student_id, name, email, dept_name) VALUES
 ('student1', 'Alice', 'student1@uml.edu', 'Department of Mathematics'),
@@ -373,55 +366,16 @@ INSERT INTO course (course_id, course_name, credits) VALUES
 ('COMP1010', 'Computing I', 3),
 ('COMP1020', 'Computing II', 3),
 ('COMP2010', 'Computing III', 3),
-('COMP2040', 'Computing IV', 3),
-('MATH1010', 'Calculus I', 4),
-('MATH1020', 'Calculus II', 4),
-('PHYS1010', 'Physics I', 4),
-('PHYS1020', 'Physics II', 4),
-('MATH2010', 'Linear Algebra', 3),
-('MATH2020', 'Differential Equations', 3),
-('PHYS2010', 'Electromagnetism', 4),
-('PHYS2020', 'Quantum Mechanics', 4),
-('COMP2030', 'Assembly', 3),
-('COMP3020', 'Computer Architecture', 3);
+('COMP2040', 'Computing IV', 3);
 
 INSERT INTO section (course_id, section_id, semester, year, instructor_id, classroom_id, time_slot_id) VALUES
-('MATH1010', 'Section107', 'Fall', 2024, '1', '1', 'TS1'),
-('PHYS1020', 'Section108', 'Spring', 2024, '2', '2', 'TS2'),
-('COMP2010', 'Section202', 'Fall', 2024, '3', '3', 'TS3'),
-('COMP2040', 'Section402', 'Spring', 2024, '4', '4', 'TS4'),
 ('COMP1010', 'Section109', 'Fall', 2024, '5', '5', 'TS5'),
-('COMP1020', 'Section110', 'Spring', 2024, '1', '6', 'TS1'),
-('COMP2010', 'Section203', 'Fall', 2024, '2', '7', 'TS2'),
-('COMP2040', 'Section403', 'Spring', 2024, '3', '8', 'TS3'),
 ('COMP1010', 'Section111', 'Fall', 2024, '4', '9', 'TS4'),
-('MATH1010', 'Section501', 'Fall', 2024, '1', '1', 'TS1'),
-('MATH1020', 'Section502', 'Spring', 2024, '2', '2', 'TS2'),
-('PHYS1010', 'Section601', 'Fall', 2024, '3', '3', 'TS3'),
-('PHYS1020', 'Section602', 'Spring', 2024, '4', '4', 'TS4'),
-('MATH2010', 'Section701', 'Fall', 2024, '6', '12', 'TS1'),
-('MATH2010', 'Section702', 'Spring', 2024, '6', '13', 'TS2'),
-('MATH2020', 'Section801', 'Fall', 2024, '7', '14', 'TS3'),
-('MATH2020', 'Section802', 'Spring', 2024, '7', '15', 'TS4'),
-('PHYS2010', 'Section901', 'Fall', 2024, '8', '16', 'TS5'),
-('PHYS2010', 'Section902', 'Spring', 2024, '8', '17', 'TS1'),
-('PHYS2020', 'Section1001', 'Fall', 2024, '9', '18', 'TS2'),
-('PHYS2020', 'Section1002', 'Spring', 2024, '9', '19', 'TS3'),
-('COMP2030', 'Section1101', 'Fall', 2024, '10', '20', 'TS4'),
-('COMP2030', 'Section1102', 'Spring', 2024, '10', '21', 'TS5'),
-('COMP3020', 'Section1201', 'Fall', 2024, '1', '22', 'TS1'),
-('COMP3020', 'Section1202', 'Spring', 2025, '1', '23', 'TS2'),
-('PHYS1020', 'Section108', 'Spring', 2025, '2', '2', 'TS2'),
-('COMP2040', 'Section402', 'Spring', 2025, '4', '4', 'TS4'),
 ('COMP1020', 'Section110', 'Spring', 2025, '1', '6', 'TS1'),
-('COMP2040', 'Section403', 'Spring', 2025, '3', '8', 'TS3'),
-('MATH1020', 'Section502', 'Spring', 2025, '2', '2', 'TS2'),
-('PHYS1020', 'Section602', 'Spring', 2025, '4', '4', 'TS4'),
-('MATH2010', 'Section702', 'Spring', 2025, '6', '13', 'TS2'),
-('MATH2020', 'Section802', 'Spring', 2025, '7', '15', 'TS4'),
-('PHYS2010', 'Section902', 'Spring', 2025, '8', '17', 'TS1'),
-('PHYS2020', 'Section1002', 'Spring', 2025, '9', '19', 'TS3'),
-('COMP2030', 'Section1102', 'Spring', 2025, '10', '21', 'TS5');
+('COMP2010', 'Section202', 'Fall', 2024, '3', '3', 'TS3'),
+('COMP2010', 'Section203', 'Fall', 2024, '2', '7', 'TS2'),
+('COMP2040', 'Section402', 'Spring', 2025, '4', '4', 'TS4'),
+('COMP2040', 'Section403', 'Spring', 2025, '3', '8', 'TS3');
 
 INSERT INTO prereq (course_id, prereq_id) VALUES
 ('COMP1020', 'COMP1010'),
@@ -429,13 +383,7 @@ INSERT INTO prereq (course_id, prereq_id) VALUES
 ('COMP2010', 'COMP1020'),
 ('COMP2040', 'COMP1010'),
 ('COMP2040', 'COMP1020'),
-('COMP2040', 'COMP2010'),
-('MATH2010', 'MATH1020'),
-('MATH2020', 'MATH2010'),
-('PHYS2010', 'PHYS1020'),
-('PHYS2020', 'PHYS2010'),
-('COMP2030', 'COMP2040'),
-('COMP3020', 'COMP2030');
+('COMP2040', 'COMP2010');
 
 INSERT INTO advise (instructor_id, student_id, start_date, end_date) VALUES
 ('1', 'student7', '2024-01-01', NULL),
@@ -461,10 +409,7 @@ INSERT INTO mastergrader (student_id, course_id, section_id, semester, year) VAL
 ('student3', 'COMP2010', 'Section202', 'Fall', 2024),
 ('student4', 'COMP2040', 'Section402', 'Spring', 2025),
 ('student5', 'COMP1010', 'Section111', 'Fall', 2024),
-('student6', 'COMP1020', 'Section110', 'Spring', 2025),
-('student1', 'MATH2010', 'Section701', 'Fall', 2024),
-('student3', 'MATH2020', 'Section801', 'Fall', 2024),
-('student5', 'PHYS2010', 'Section901', 'Fall', 2024);
+('student6', 'COMP1020', 'Section110', 'Spring', 2025);
 
 INSERT INTO undergraduategrader (student_id, course_id, section_id, semester, year) VALUES
 ('student4', 'COMP2010', 'Section202', 'Fall', 2024),
@@ -475,28 +420,16 @@ INSERT INTO undergraduategrader (student_id, course_id, section_id, semester, ye
 ('student15', 'COMP2040', 'Section403', 'Spring', 2025);
 
 INSERT INTO take (student_id, course_id, section_id, semester, year, grade) VALUES
-('student4', 'COMP2040', 'Section402', 'Spring', 2024, 'A'),
+('student4', 'COMP2040', 'Section402', 'Spring', 2025, 'A'),
 ('student5', 'COMP1010', 'Section109', 'Fall', 2024, 'A-'),
 ('student7', 'COMP2010', 'Section203', 'Fall', 2024, 'A-'),
-('student8', 'COMP2040', 'Section403', 'Spring', 2024, 'A'),
+('student8', 'COMP2040', 'Section403', 'Spring', 2025, 'A'),
 ('student9', 'COMP1010', 'Section109', 'Fall', 2024, 'A-'),
-('student10', 'COMP1020', 'Section110', 'Spring', 2024, 'A'),
+('student10', 'COMP1020', 'Section110', 'Spring', 2025, 'A'),
 ('student11', 'COMP2010', 'Section202', 'Fall', 2024, 'A-'),
-('student12', 'COMP2040', 'Section402', 'Spring', 2024, 'A'),
+('student12', 'COMP2040', 'Section402', 'Spring', 2025, 'A'),
 ('student13', 'COMP1010', 'Section111', 'Fall', 2024, 'A-'),
-('student15', 'COMP2010', 'Section203', 'Fall', 2024, 'A-'),
-('student1', 'MATH2010', 'Section701', 'Fall', 2024, 'B+'),
-('student2', 'MATH2010', 'Section702', 'Spring', 2025, NULL),
-('student3', 'MATH2020', 'Section801', 'Fall', 2024, 'B'),
-('student4', 'MATH2020', 'Section802', 'Spring', 2025, NULL),
-('student5', 'PHYS2010', 'Section901', 'Fall', 2024, 'A'),
-('student6', 'PHYS2010', 'Section902', 'Spring', 2025, NULL),
-('student7', 'PHYS2020', 'Section1001', 'Fall', 2024, 'B+'),
-('student8', 'PHYS2020', 'Section1002', 'Spring', 2025, NULL),
-('student9', 'COMP2030', 'Section1101', 'Fall', 2024, 'A-'),
-('student10', 'COMP2030', 'Section1102', 'Spring', 2025, NULL),
-('student11', 'COMP3020', 'Section1201', 'Fall', 2024, 'A'),
-('student12', 'COMP3020', 'Section1202', 'Spring', 2025, NULL);
+('student15', 'COMP2010', 'Section203', 'Fall', 2024, 'A-');
 
 INSERT INTO club (name, club_id, advisor_id, president_id) VALUES
 ('Math Club', 'CLUB001', '1', 'student1'),
