@@ -252,6 +252,16 @@ INSERT INTO account (email, password, type) VALUES
 ('student13@uml.edu', 'pass13', 'student'),
 ('student14@uml.edu', 'pass14', 'student'),
 ('student15@uml.edu', 'pass15', 'student'),
+('student16@uml.edu', 'pass16', 'student'),
+('student17@uml.edu', 'pass17', 'student'),
+('student18@uml.edu', 'pass18', 'student'),
+('student19@uml.edu', 'pass19', 'student'),
+('student20@uml.edu', 'pass20', 'student'),
+('student21@uml.edu', 'pass21', 'student'),
+('student22@uml.edu', 'pass22', 'student'),
+('student23@uml.edu', 'pass23', 'student'),
+('student24@uml.edu', 'pass24', 'student'),
+('student25@uml.edu', 'pass25', 'student'),
 ('instructor1@uml.edu', 'pass16', 'instructor'),
 ('instructor2@uml.edu', 'pass17', 'instructor'),
 ('instructor3@uml.edu', 'pass18', 'instructor'),
@@ -289,7 +299,17 @@ INSERT INTO student (student_id, name, email, dept_name) VALUES
 ('student12', 'Niaj', 'student12@uml.edu', 'Miner School of Computer & Information Sciences'),
 ('student13', 'Olivia', 'student13@uml.edu', 'Miner School of Computer & Information Sciences'),
 ('student14', 'Peggy', 'student14@uml.edu', 'Miner School of Computer & Information Sciences'),
-('student15', 'Sybil', 'student15@uml.edu', 'Miner School of Computer & Information Sciences');
+('student15', 'Sybil', 'student15@uml.edu', 'Miner School of Computer & Information Sciences'),
+('student16', 'Name1', 'student16@uml.edu', 'Miner School of Computer & Information Sciences'),
+('student17', 'Name2', 'student17@uml.edu', 'Miner School of Computer & Information Sciences'),
+('student18', 'Name3', 'student18@uml.edu', 'Miner School of Computer & Information Sciences'),
+('student19', 'Name4', 'student19@uml.edu', 'Miner School of Computer & Information Sciences'),
+('student20', 'Name5', 'student20@uml.edu', 'Miner School of Computer & Information Sciences'),
+('student21', 'Name6', 'student21@uml.edu', 'Miner School of Computer & Information Sciences'),
+('student22', 'Name7', 'student22@uml.edu', 'Miner School of Computer & Information Sciences'),
+('student23', 'Name8', 'student23@uml.edu', 'Miner School of Computer & Information Sciences'),
+('student24', 'Name9', 'student24@uml.edu', 'Miner School of Computer & Information Sciences'),
+('student25', 'Name10', 'student25@uml.edu', 'Miner School of Computer & Information Sciences');
 
 INSERT INTO undergraduate (student_id, total_credits, class_standing) VALUES
 ('student4', 6, 'Junior'),
@@ -371,6 +391,7 @@ INSERT INTO course (course_id, course_name, credits) VALUES
 INSERT INTO section (course_id, section_id, semester, year, instructor_id, classroom_id, time_slot_id) VALUES
 ('COMP1010', 'Section109', 'Fall', 2024, '5', '5', 'TS5'),
 ('COMP1010', 'Section111', 'Fall', 2024, '4', '9', 'TS4'),
+('COMP1010', 'Section112', 'Spring', 2025, '4', '9', 'TS5'),
 ('COMP1020', 'Section110', 'Spring', 2025, '1', '6', 'TS1'),
 ('COMP2010', 'Section202', 'Fall', 2024, '3', '3', 'TS3'),
 ('COMP2010', 'Section203', 'Fall', 2024, '2', '7', 'TS2'),
@@ -429,7 +450,17 @@ INSERT INTO take (student_id, course_id, section_id, semester, year, grade) VALU
 ('student11', 'COMP2010', 'Section202', 'Fall', 2024, 'A-'),
 ('student12', 'COMP2040', 'Section402', 'Spring', 2025, 'A'),
 ('student13', 'COMP1010', 'Section111', 'Fall', 2024, 'A-'),
-('student15', 'COMP2010', 'Section203', 'Fall', 2024, 'A-');
+('student15', 'COMP2010', 'Section203', 'Fall', 2024, 'A-'),
+('student16', 'COMP1010', 'Section112', 'Spring', 2025, 'A-'),
+('student17', 'COMP1010', 'Section112', 'Spring', 2025, 'A-'),
+('student18', 'COMP1010', 'Section112', 'Spring', 2025, 'A-'),
+('student19', 'COMP1010', 'Section112', 'Spring', 2025, 'A-'),
+('student20', 'COMP1010', 'Section112', 'Spring', 2025, 'A-'),
+('student21', 'COMP1010', 'Section112', 'Spring', 2025, 'A-'),
+('student22', 'COMP1010', 'Section112', 'Spring', 2025, 'A-'),
+('student23', 'COMP1010', 'Section112', 'Spring', 2025, 'A-'),
+('student24', 'COMP1010', 'Section112', 'Spring', 2025, 'A-'),
+('student25', 'COMP1010', 'Section112', 'Spring', 2025, 'A-');
 
 INSERT INTO club (name, club_id, advisor_id, president_id) VALUES
 ('Math Club', 'CLUB001', '1', 'student1'),
