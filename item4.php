@@ -64,8 +64,25 @@ while ($row = mysqli_fetch_array($take_result, MYSQLI_ASSOC)) {
     echo '<br>';
 }
 
-degreeCredits('undergraduate', $id, $GPA, $myconnection);
-degreeCredits('master', $id, $GPA, $myconnection);
+$undergrad_query =
+    "SELECT *
+    FROM undergraduate
+    WHERE student_id = '$id'";
+
+$master_query =
+    "SELECT *
+    FROM master
+    WHERE student_id = '$id'";
+
+$undergrad_result = mysqli_query($myconnection, $undergrad_query) or die("Query failed: " . mysqli_error($myconnection));
+$master_result = mysqli_query($myconnection, $master_query) or die("Query failed: " . mysqli_error($myconnection));
+
+if (!is_null(mysqli_fetch_array($undergrad_result, MYSQLI_ASSOC))) {
+    degreeCredits('undergraduate', $id, $GPA, $myconnection);
+} else if (!is_null(mysqli_fetch_array($master_result, MYSQLI_ASSOC))) {
+    degreeCredits('master', $id, $GPA, $myconnection);
+}
+
 
 // close mysql connection
 mysqli_close($myconnection);
