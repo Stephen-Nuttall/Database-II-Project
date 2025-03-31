@@ -237,6 +237,12 @@ CREATE TABLE tutor_assignments (
 );
 
 INSERT INTO account (email, password, type) VALUES
+('admin@uml.edu', '123456', 'admin'),
+('dbadams@cs.uml.edu', '123456', 'instructor'),
+('slin@cs.uml.edu', '123456', 'instructor'),
+('Yelena_Rykalova@uml.edu', '123456', 'instructor'),
+('Johannes_Weis@uml.edu', '123456', 'instructor'),
+('Charles_Wilkes@uml.edu', '123456', 'instructor'),
 ('student1@uml.edu', 'pass1', 'student'),
 ('student2@uml.edu', 'pass2', 'student'),
 ('student3@uml.edu', 'pass3', 'student'),
@@ -262,15 +268,12 @@ INSERT INTO account (email, password, type) VALUES
 ('student23@uml.edu', 'pass23', 'student'),
 ('student24@uml.edu', 'pass24', 'student'),
 ('student25@uml.edu', 'pass25', 'student'),
-('instructor1@uml.edu', 'pass16', 'instructor'),
-('instructor2@uml.edu', 'pass17', 'instructor'),
-('instructor3@uml.edu', 'pass18', 'instructor'),
-('tutor1@uml.edu', 'pass19', 'tutor'),
-('tutor2@uml.edu', 'pass20', 'tutor'),
-('tutor3@uml.edu', 'pass21', 'tutor'),
-('tutor4@uml.edu', 'pass22', 'tutor'),
-('tutor5@uml.edu', 'pass23', 'tutor'),
-('tutor6@uml.edu', 'pass24', 'tutor');
+('tutor1@uml.edu', 'pass19', 'student'),
+('tutor2@uml.edu', 'pass20', 'student'),
+('tutor3@uml.edu', 'pass21', 'student'),
+('tutor4@uml.edu', 'pass22', 'student'),
+('tutor5@uml.edu', 'pass23', 'student'),
+('tutor6@uml.edu', 'pass24', 'student');
 
 INSERT INTO department (dept_name, location) VALUES
 ('Miner School of Computer & Information Sciences', 'Dandeneau Hall, 1 University Avenue, Lowell, MA 01854'),
