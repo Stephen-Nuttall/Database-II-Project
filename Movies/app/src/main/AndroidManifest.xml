@@ -10,7 +10,7 @@
         android:theme="@style/Theme.Movies"
         android:usesCleartextTraffic="true">
         <activity android:name=".PageMovie" />
-            <activity android:name=".MovieQuery"
+            <activity android:name=".item1"
                 android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -19,10 +19,12 @@ public class QueryRequest extends StringRequest {
         }
     };
 
-    public QueryRequest(String year, String url, Response.Listener<String> listener){
+    public QueryRequest(String[] argNames, String[] arguments, String url, Response.Listener<String> listener){
         super(Method.POST, url, listener, err);
         args = new HashMap<String, String>();
-        args.put("year", year);
+        for (int i = 0; i < arguments.length; i++) {
+            args.put(argNames[i], arguments[i]);
+        }
     }
 
     @Override
