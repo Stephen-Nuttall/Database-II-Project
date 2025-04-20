@@ -7,7 +7,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
-public interface ApiService {
+public interface ClubApiService {
 
     @FormUrlEncoded
     @POST("join_club.php")
@@ -27,5 +27,14 @@ public interface ApiService {
             @Field("club_name") String clubName,
             @Field("student_id") String studentId,
             @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("create_club.php")
+    Call<ClubResponse> createClub(
+            @Field("instructor_id") String instructorId,
+            @Field("password") String password,
+            @Field("club_name") String clubName,
+            @Field("president_id") String presidentId
     );
 }

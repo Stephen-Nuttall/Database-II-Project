@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.movies">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,15 +13,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Movies"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PageMovie" />
-            <activity android:name=".item1"
-                android:exported="true">
+        <activity
+            android:name=".activities.ActivityCreateClub"
+            android:exported="true"
+            android:theme="@style/Theme.Movies">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.ActivityClubJoinLeave"
+            android:exported="true"
+            android:theme="@style/Theme.Movies">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".PageMovie" />
     </application>
 
 </manifest>
