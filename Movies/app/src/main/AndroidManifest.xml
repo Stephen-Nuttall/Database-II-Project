@@ -16,7 +16,7 @@
 
         
         <activity
-            android:name=".item6"
+            android:name=".item2"
             android:exported="true"
             android:theme="@style/Theme.Movies"
             android:windowSoftInputMode="stateHidden|adjustResize">
@@ -39,7 +39,7 @@
         </activity>
 
         <activity
-            android:name=".item5"
+            android:name=".item4"
             android:exported="true"
             android:theme="@style/Theme.Movies">
             <intent-filter>

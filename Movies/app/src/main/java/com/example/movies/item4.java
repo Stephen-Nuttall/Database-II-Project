@@ -17,7 +17,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class item5 extends AppCompatActivity {
+public class item4 extends AppCompatActivity {
     
     ApiService apiService;
     EditText editInstructorId, editPassword;
@@ -27,7 +27,7 @@ public class item5 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.item5);
+        setContentView(R.layout.item4);
         apiService = RetrofitClient.getInstance().create(ApiService.class);
         initializeViews();
         setButtonListeners();

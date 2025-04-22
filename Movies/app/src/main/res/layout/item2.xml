@@ -27,28 +27,30 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:gravity="center"
-            android:text="Add a TA"
+            android:text="Enroll in a Section"
             android:textColor="#37474F"
             android:textSize="20sp"
             android:textStyle="bold" />
 
 
-        <!-- Admin Email -->
+        <!-- Student ID -->
         <TextView
+            android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:text="Admin Email"
+            android:text="Student ID"
             android:textColor="#666"
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/editEmail"
+            android:id="@+id/editStudentId"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginBottom="16dp"
             android:background="@android:drawable/editbox_background"
-            android:hint="Enter your email"
+            android:hint="Enter student ID"
+            android:inputType="text"
             android:paddingStart="12dp"
             android:paddingEnd="12dp" />
 
@@ -72,28 +74,8 @@
             android:paddingStart="12dp"
             android:paddingEnd="12dp" />
 
-        <!-- Student ID -->
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="Student ID"
-            android:textColor="#666"
-            android:textSize="14sp" />
-
-        <EditText
-            android:id="@+id/editStudentId"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginBottom="16dp"
-            android:background="@android:drawable/editbox_background"
-            android:hint="Enter student ID"
-            android:inputType="text"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp" />
-
         <!-- Semester and Year -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="38dp"
@@ -142,13 +124,13 @@
             android:gravity="center">
 
             <Button
-                android:id="@+id/btnAddTa"
+                android:id="@+id/btnEnroll"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:backgroundTint="#388E3C"
-                android:text="Add TA"
+                android:text="Enroll"
                 android:textColor="#FFFFFF" />
 
         </LinearLayout>

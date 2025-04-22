@@ -24,19 +24,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class item6 extends AppCompatActivity {
+public class item2 extends AppCompatActivity {
     
     ApiService apiService;
     Spinner sectionSpinner;
-    EditText editEmail, editPassword, editStudentId;
+    EditText editPassword, editStudentId;
     TextView tvMessage, tvCurrentSemester, tvCurrentYear;
-    Button btnAddTa;
+    Button btnEnroll;
     String semester, year;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.item6);
+        setContentView(R.layout.item2);
         apiService = RetrofitClient.getInstance().create(ApiService.class);
         initializeViews();
         setButtonListeners();
@@ -44,18 +44,17 @@ public class item6 extends AppCompatActivity {
 
     private void initializeViews() {
         sectionSpinner = findViewById(R.id.section_spinner);
-        editEmail = findViewById(R.id.editEmail);
         editPassword = findViewById(R.id.editPassword);
         editStudentId = findViewById(R.id.editStudentId);
         tvCurrentYear = findViewById(R.id.tvCurrentYear);
         tvCurrentSemester = findViewById(R.id.tvCurrentSemester);
         tvMessage = findViewById(R.id.tvMessage);
-        btnAddTa = findViewById(R.id.btnAddTa);
+        btnEnroll = findViewById(R.id.btnEnroll);
         loadSectionDropdown();
     }
 
     private void setButtonListeners() {
-        btnAddTa.setOnClickListener(v -> addTa());
+        btnEnroll.setOnClickListener(v -> enroll());
     }
 
     private void loadSectionDropdown() {
@@ -78,34 +77,33 @@ public class item6 extends AppCompatActivity {
                     }
 
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                            item6.this,
+                            item2.this,
                             android.R.layout.simple_spinner_item,
                             sections
                     );
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     sectionSpinner.setAdapter(adapter);
                 } else {
-                    Toast.makeText(item6.this, "Failed to load sections", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(item2.this, "Failed to load sections", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Responses> call, Throwable t) {
-                Toast.makeText(item6.this, "API error: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(item2.this, "API error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    private void addTa() {
-        String email = editEmail.getText().toString().trim();
+    private void enroll() {
         String password = editPassword.getText().toString().trim();
         String studentId = editStudentId.getText().toString().trim();
         String section = sectionSpinner.getSelectedItem().toString();
 
 
-        if (!isFormValid(email, password, studentId, section)) return;
+        if (!isFormValid(password, studentId, section)) return;
 
-        Call<Responses> call = apiService.addTa(email, password, studentId, section);
+        Call<Responses> call = apiService.enroll(password, studentId, section);
         call.enqueue(new Callback<Responses>() {
             @Override
             public void onResponse(Call<Responses> call, Response<Responses> response) {
@@ -120,22 +118,19 @@ public class item6 extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Responses> call, Throwable t) {
-                showMessage("Failed to connect: " + t.getMessage(), Color.RED);
+                // In your onFailure()
+Log.e("Enrollment Error", "onFailure: " + t.getMessage());
             }
         });
     }
 
-    private boolean isFormValid(String email, String password, String studentId, String section) {
-        if (email.isEmpty()) {
-            showMessage("Please enter email.", Color.RED);
+    private boolean isFormValid(String password, String studentId, String section) {
+        if (studentId.isEmpty()) {
+            showMessage("Please enter student ID.", Color.RED);
             return false;
         }
         if (password.isEmpty()) {
             showMessage("Please enter password.", Color.RED);
-            return false;
-        }
-        if (studentId.isEmpty()) {
-            showMessage("Please enter student ID.", Color.RED);
             return false;
         }
         if (section.equals("--Select a section--")) {
@@ -144,7 +139,7 @@ public class item6 extends AppCompatActivity {
         }
         return true;
     }
-
+    
     private void showMessage(String message, int color) {
         tvMessage.setTextColor(color);
         tvMessage.setText(message);

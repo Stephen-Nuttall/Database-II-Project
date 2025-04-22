@@ -66,7 +66,6 @@ if ($action === 'get_sections') {
     exit;
 }
 
-$email = $_POST["email"];
 $password_attempt = $_POST["password"];
 $sid = $_POST["student_id"];
 $selected_course_id_and_section_id = $_POST["section"];
@@ -74,37 +73,40 @@ $parts = explode("-", $selected_course_id_and_section_id);
 $course_id = $parts[0];     
 $section_id = $parts[1];
 
-if (empty($email) or empty($password_attempt) or empty($sid)) {
+if (empty($password_attempt) or empty($sid)) {
     $response['message'] = "Please fill out all the fields!";
     echo json_encode($response);
     exit;
 }
 
-$admin_email_query =
+$student_id_query =
     "SELECT *
-    FROM account
-    WHERE email = ? AND type = 'admin'";
+    FROM student
+    WHERE student_id = ?";
 
-$stmt = $myconnection->prepare($admin_email_query);
-$stmt->bind_param("s", $email);
+$stmt = $myconnection->prepare($student_id_query);
+$stmt->bind_param("s", $sid);
 $stmt->execute();
 $stmt->store_result();
-
 if ($stmt->num_rows == 0) {
-    $response['message'] = "This is not a valid email.";
+    $response['message'] = "There is no student with this ID.";
     $myconnection->close();
     echo json_encode($response);
     exit;
 }
 $stmt->close();
 
-$admin_password_query =
+
+$student_password_query =
     "SELECT password
     FROM account
-    WHERE email = ?";
+    WHERE email = (
+    SELECT email
+    FROM student
+    WHERE student_id = ?)";
 
-$stmt = $myconnection->prepare($admin_password_query);
-$stmt->bind_param("s", $email);
+$stmt = $myconnection->prepare($student_password_query);
+$stmt->bind_param("s", $sid);
 $stmt->execute();
 $stmt->bind_result($actual_password);
 $stmt->fetch();
@@ -116,56 +118,27 @@ if ($password_attempt != $actual_password) {
     exit;
 }
 
-$student_id_query =
-    "SELECT *
-    FROM phd
-    WHERE student_id = ?";
-
-$stmt = $myconnection->prepare($student_id_query);
-$stmt->bind_param("s", $sid);
+// Check if student already registered for the section 
+$query_check_registration = "
+    SELECT *
+    FROM take
+    WHERE student_id = ?
+      AND course_id = ?
+      AND section_id = ?
+      AND semester = ?
+      AND year = ?
+";
+$stmt = $myconnection->prepare($query_check_registration);
+$stmt->bind_param("ssssd", $sid, $course_id, $section_id, $this_semester, $this_year);
 $stmt->execute();
-$stmt->store_result();
-if ($stmt->num_rows == 0) {
-    $response['message'] = "There is no PhD student with this ID.";
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $response['message'] = "You have already registered for this section.";
     $myconnection->close();
     echo json_encode($response);
     exit;
 }
-$stmt->close();
-
-$phd_availablity_query =
-    "SELECT *
-    FROM ta
-    WHERE student_id = ?";
-
-$stmt = $myconnection->prepare($phd_availablity_query);
-$stmt->bind_param("s", $sid);
-$stmt->execute();
-$stmt->store_result();
-if ($stmt->num_rows != 0) {
-    $response['message'] = "This PhD student is already a TA for a section.";
-    $myconnection->close();
-    echo json_encode($response);
-    exit;
-}
-$stmt->close();
-
-$section_open_query =
-    "SELECT *
-    FROM ta
-    WHERE course_id = ? AND section_id = ? AND semester = ? AND year = ?";
-
-$stmt = $myconnection->prepare($section_open_query);
-$stmt->bind_param("sssd", $course_id, $section_id, $this_semester, $this_year);
-$stmt->execute();
-$stmt->store_result();
-if ($stmt->num_rows != 0) {
-    $response['message'] = "This section already has a TA.";
-    $myconnection->close();
-    echo json_encode($response);
-    exit;
-}
-$stmt->close();
 
 $section_size_query =
     "SELECT COUNT(*)
@@ -179,22 +152,23 @@ $stmt->bind_result($size);
 $stmt->fetch();
 $stmt->close();
 
-if ($size < 10) {
-    $response['message'] = "There need to be at least 10 students in a section to get a TA.";
+if ($size > 14) {
+    $response['message'] = "There are already 15 students taking this section.";
     $myconnection->close();
     echo json_encode($response);
     exit;
 }
 
-$ta_insert =
-    "INSERT INTO ta
-    VALUES (?, ?, ?, ?, ?)";
+$take_insert =
+    "INSERT INTO take
+    VALUES (?, ?, ?, ?, ?, ?)";
     
-$stmt = $myconnection->prepare($ta_insert);
-$stmt->bind_param("ssssd", $sid, $course_id, $section_id, $this_semester, $this_year);
+$stmt = $myconnection->prepare($take_insert);
+$nullValue = NULL;
+$stmt->bind_param("ssssds", $sid, $course_id, $section_id, $this_semester, $this_year, $nullValue);
 if ($stmt->execute()) {
     $response['success'] = true;
-    $response['message'] = "The student has been added as a TA to the chosen section.";
+    $response['message'] = "You have enrolled in the chosen section.";
 } else {
     $response['message'] = "Insert failed, student could not be added.";
 }
