@@ -14,6 +14,28 @@
         android:theme="@style/Theme.Movies"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".item1"
+            android:exported="true"
+            android:theme="@style/Theme.Movies">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".item5"
+            android:exported="true"
+            android:theme="@style/Theme.Movies">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".activities.ActivityCreateClub"
             android:exported="true"
             android:theme="@style/Theme.Movies">

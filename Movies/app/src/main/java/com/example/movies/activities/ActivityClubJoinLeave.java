@@ -61,7 +61,7 @@ public class ActivityClubJoinLeave extends AppCompatActivity {
         apiService.getClubs("get_clubs").enqueue(new Callback<ClubResponse>() {
             @Override
             public void onResponse(Call<ClubResponse> call, Response<ClubResponse> response) {
-                Log.d("API_RESULT", response.body().toString());
+                //Log.d("API_RESULT", response.body().toString());
                 if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                     List<String> clubs = new ArrayList<>();
                     clubs.add("--Select a club--");
