@@ -10,13 +10,6 @@ import retrofit2.http.POST;
 public interface ApiService {
 
     @FormUrlEncoded
-    @POST("item4.php")
-    Call<Responses> viewRecords(
-            @Field("instructor_id") String instructorId,
-            @Field("password") String password
-    );
-
-    @FormUrlEncoded
     @POST("item2.php")
     Call<Responses> getSections(@Field("action") String action);
 
@@ -27,6 +20,21 @@ public interface ApiService {
             @Field("student_id") String studentId,
             @Field("section") String section
     );
+
+    @FormUrlEncoded
+    @POST("item3.php")
+    Call<Responses> viewStudentRecords(
+            @Field("student_id") String studentId,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("item4.php")
+    Call<Responses> viewRecords(
+            @Field("instructor_id") String instructorId,
+            @Field("password") String password
+    );
+
 
     @FormUrlEncoded
     @POST("join_club.php")
