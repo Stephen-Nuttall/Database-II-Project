@@ -9,8 +9,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.movies.R;
-import com.example.movies.models.RecordsResponse;
-import com.example.movies.network.ViewRecordsApiService;
+import com.example.movies.models.Responses;
+import com.example.movies.network.ApiService;
 import com.example.movies.network.RetrofitClient;
 
 import retrofit2.Call;
@@ -22,7 +22,7 @@ import retrofit2.http.POST;
 
 public class item5 extends AppCompatActivity {
     
-    ViewRecordsApiService apiService;
+    ApiService apiService;
     EditText editInstructorId, editPassword;
     TextView tvMessage;
     Button btnViewRecords;
@@ -31,7 +31,7 @@ public class item5 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item5);
-        apiService = RetrofitClient.getInstance().create(ViewRecordsApiService.class);
+        apiService = RetrofitClient.getInstance().create(ApiService.class);
         initializeViews();
         setButtonListeners();
     }
@@ -53,12 +53,12 @@ public class item5 extends AppCompatActivity {
 
         if (!isFormValid(instructorId, password)) return;
 
-        Call<RecordsResponse> call = apiService.viewRecords(instructorId, password);
-        call.enqueue(new Callback<RecordsResponse>() {
+        Call<Responses> call = apiService.viewRecords(instructorId, password);
+        call.enqueue(new Callback<Responses>() {
             @Override
-            public void onResponse(Call<RecordsResponse> call, Response<RecordsResponse> response) {
+            public void onResponse(Call<Responses> call, Response<Responses> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    RecordsResponse result = response.body();
+                    Responses result = response.body();
                     int color = result.isSuccess() ? Color.GREEN : result.isReply() ? Color.BLACK : Color.RED;
                     showMessage(result.getMessage(), color);
                 } else {
@@ -67,7 +67,7 @@ public class item5 extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<RecordsResponse> call, Throwable t) {
+            public void onFailure(Call<Responses> call, Throwable t) {
                 showMessage("Failed to connect: " + t.getMessage(), Color.RED);
             }
         });

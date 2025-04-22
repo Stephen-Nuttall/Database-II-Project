@@ -13,8 +13,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.movies.R;
-import com.example.movies.models.ClubResponse;
-import com.example.movies.network.ClubApiService;
+import com.example.movies.models.Responses;
+import com.example.movies.network.ApiService;
 import com.example.movies.network.RetrofitClient;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import retrofit2.Response;
 
 public class ActivityClubJoinLeave extends AppCompatActivity {
 
-    ClubApiService apiService;
+    ApiService apiService;
 
     Spinner clubSpinner;
     EditText editStudentId, editPassword;
@@ -37,7 +37,7 @@ public class ActivityClubJoinLeave extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_leave_club);
-        apiService = RetrofitClient.getInstance().create(ClubApiService.class);
+        apiService = RetrofitClient.getInstance().create(ApiService.class);
         initializeViews();
         setButtonListeners();
     }
@@ -58,9 +58,9 @@ public class ActivityClubJoinLeave extends AppCompatActivity {
     }
 
     private void loadClubDropdown() {
-        apiService.getClubs("get_clubs").enqueue(new Callback<ClubResponse>() {
+        apiService.getClubs("get_clubs").enqueue(new Callback<Responses>() {
             @Override
-            public void onResponse(Call<ClubResponse> call, Response<ClubResponse> response) {
+            public void onResponse(Call<Responses> call, Response<Responses> response) {
                 //Log.d("API_RESULT", response.body().toString());
                 if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                     List<String> clubs = new ArrayList<>();
@@ -80,7 +80,7 @@ public class ActivityClubJoinLeave extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ClubResponse> call, Throwable t) {
+            public void onFailure(Call<Responses> call, Throwable t) {
                 Toast.makeText(ActivityClubJoinLeave.this, "API error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
@@ -114,13 +114,13 @@ public class ActivityClubJoinLeave extends AppCompatActivity {
 
 
 
-        Call<ClubResponse> call = apiService.joinClub(club, studentId, password);
+        Call<Responses> call = apiService.joinClub(club, studentId, password);
 
-        call.enqueue(new Callback<ClubResponse>() {
+        call.enqueue(new Callback<Responses>() {
             @Override
-            public void onResponse(Call<ClubResponse> call, Response<ClubResponse> response) {
+            public void onResponse(Call<Responses> call, Response<Responses> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    ClubResponse result = response.body();
+                    Responses result = response.body();
                     int color = result.isSuccess() ? Color.GREEN : Color.RED;
                     showMessage(result.getMessage(), color);
                 } else {
@@ -129,7 +129,7 @@ public class ActivityClubJoinLeave extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ClubResponse> call, Throwable t) {
+            public void onFailure(Call<Responses> call, Throwable t) {
                 showMessage("Failed to connect: " + t.getMessage(), Color.RED);
             }
         });
@@ -145,12 +145,12 @@ public class ActivityClubJoinLeave extends AppCompatActivity {
         if (!isFormValid(club, studentId, password)) return;
 
 
-        Call<ClubResponse> call = apiService.leaveClub(club, studentId, password);
-        call.enqueue(new Callback<ClubResponse>() {
+        Call<Responses> call = apiService.leaveClub(club, studentId, password);
+        call.enqueue(new Callback<Responses>() {
             @Override
-            public void onResponse(Call<ClubResponse> call, Response<ClubResponse> response) {
+            public void onResponse(Call<Responses> call, Response<Responses> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    ClubResponse result = response.body();
+                    Responses result = response.body();
                     int color = result.isSuccess() ? Color.BLUE : Color.RED;
                     showMessage(result.getMessage(), color);
                 } else {
@@ -159,7 +159,7 @@ public class ActivityClubJoinLeave extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ClubResponse> call, Throwable t) {
+            public void onFailure(Call<Responses> call, Throwable t) {
                 showMessage("Failed to connect: " + t.getMessage(), Color.RED);
             }
         });
