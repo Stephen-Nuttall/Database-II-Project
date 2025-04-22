@@ -1,8 +1,8 @@
-<!--  6. Teaching Assistants (TAs), who are PhD students, will be assigned by the admin to
-sections with more than 10 students. A PhD student is eligible to be a TA for only one
-section. -->
-
 <?php
+header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST");
+
 // Establishing MYSQL connection 
 $host = "localhost";
 $username = "root";
@@ -10,9 +10,11 @@ $password = "";
 $database = "db2";
 $myconnection = new mysqli($host, $username, $password, $database);
 
-// Check if connection is estblished
+// Check if connection is established
 if ($myconnection->connect_error) {
-    die("Connection failed: " . $myconnection->connect_error);
+    $response['message'] = "Database connection failed.";
+    echo json_encode($response);
+    exit;
 }
 
 //Get Current year
@@ -38,31 +40,30 @@ if ($result && $row = $result->fetch_assoc()) {
     $this_semester = $row['current_semester'];
 }
 
-//Get all sections offered this year and semester 
-$query_get_all_sections = "SELECT course_id , section_id 
-    FROM section
-    WHERE year = ? AND semester = ?
-    ORDER BY course_id, section_id";
+$action = $_POST['action'] ?? '';
 
-$stmt = $myconnection->prepare($query_get_all_sections);
-$stmt->bind_param("ss", $this_year, $this_semester); 
-$stmt->execute();
-$result_get_all_sections = $stmt->get_result();
+// Handle section list dropdown
+if ($action === 'get_sections') {
+    // Get all sections offered this year and semester 
+    $query_get_all_sections = "SELECT course_id , section_id 
+        FROM section
+        WHERE year = ? AND semester = ?
+        ORDER BY course_id, section_id";
 
-//Load the sections into the drop down menu 
-$these_sections = '<option value="">-- Select a Section --</option>';
-if ($result_get_all_sections->num_rows > 0) {
-    while ($row = $result_get_all_sections->fetch_assoc()) {
-        $combined = htmlspecialchars($row["course_id"]) . '-' . htmlspecialchars($row["section_id"]);
-        $these_sections .= '<option value="' . $combined . '">' . $combined . '</option>';
+    $stmt = $myconnection->prepare($query_get_all_sections);
+    $stmt->bind_param("ss", $this_year, $this_semester);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $sections = [];
+    while ($row = $result->fetch_assoc()) {
+        // Construct the section information string
+        $section_info = $row['course_id'] . "-" . $row['section_id'];
+        $sections[] = $section_info;
     }
-} else {
-    $these_sections = '<option value="">No sections available</option>';
-}
-  
-//Return if the form is not submitted
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-   return;
+    $stmt->close();
+    $myconnection->close();
+    echo json_encode(["success" => true, "sections" => $sections, "semester" => $this_semester, "year" => $this_year]);
+    exit;
 }
 
 $email = $_POST["email"];
@@ -74,7 +75,8 @@ $course_id = $parts[0];
 $section_id = $parts[1];
 
 if (empty($email) or empty($password_attempt) or empty($sid)) {
-    echo "Please fill out all the fields!";
+    $response['message'] = "Please fill out all the fields!";
+    echo json_encode($response);
     exit;
 }
 
@@ -89,8 +91,9 @@ $stmt->execute();
 $stmt->store_result();
 
 if ($stmt->num_rows == 0) {
-    echo "This is not a valid email.";
+    $response['message'] = "This is not a valid email.";
     $myconnection->close();
+    echo json_encode($response);
     exit;
 }
 $stmt->close();
@@ -107,8 +110,9 @@ $stmt->bind_result($actual_password);
 $stmt->fetch();
 $stmt->close();
 if ($password_attempt != $actual_password) {
-    echo "The password entered is incorrect.";
+    $response['message'] = "The password entered is incorrect.";
     $myconnection->close();
+    echo json_encode($response);
     exit;
 }
 
@@ -122,8 +126,9 @@ $stmt->bind_param("s", $sid);
 $stmt->execute();
 $stmt->store_result();
 if ($stmt->num_rows == 0) {
-    echo "There is no PhD student with this ID.";
+    $response['message'] = "There is no PhD student with this ID.";
     $myconnection->close();
+    echo json_encode($response);
     exit;
 }
 $stmt->close();
@@ -138,8 +143,9 @@ $stmt->bind_param("s", $sid);
 $stmt->execute();
 $stmt->store_result();
 if ($stmt->num_rows != 0) {
-    echo "This PhD student is already a TA for a section.";
+    $response['message'] = "This PhD student is already a TA for a section.";
     $myconnection->close();
+    echo json_encode($response);
     exit;
 }
 $stmt->close();
@@ -154,8 +160,9 @@ $stmt->bind_param("sssd", $course_id, $section_id, $this_semester, $this_year);
 $stmt->execute();
 $stmt->store_result();
 if ($stmt->num_rows != 0) {
-    echo "This section already has a TA.";
+    $response['message'] = "This section already has a TA.";
     $myconnection->close();
+    echo json_encode($response);
     exit;
 }
 $stmt->close();
@@ -173,8 +180,9 @@ $stmt->fetch();
 $stmt->close();
 
 if ($size < 10) {
-    echo "There need to be at least 10 students in a section to get a TA.";
+    $response['message'] = "There need to be at least 10 students in a section to get a TA.";
     $myconnection->close();
+    echo json_encode($response);
     exit;
 }
 
@@ -185,8 +193,10 @@ $ta_insert =
 $stmt = $myconnection->prepare($ta_insert);
 $stmt->bind_param("ssssd", $sid, $course_id, $section_id, $this_semester, $this_year);
 if ($stmt->execute()) {
-    echo 'The student has been added as a TA to the chosen section.';
+    $response['success'] = true;
+    $response['message'] = "The student has been added as a TA to the chosen section.";
 } else {
-    echo 'Insert failed, student could not be added.';
+    $response['message'] = "Insert failed, student could not be added.";
 }
 $myconnection->close();
+echo json_encode($response);

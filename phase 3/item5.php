@@ -27,7 +27,6 @@ mysqli_stmt_store_result($stmt);
 
 if (mysqli_stmt_num_rows($stmt) == 0) {
     $response['message'] = "This instructor doesn't exist!";
-    mysqli_stmt_close($stmt);
     mysqli_close($myconnection);
     echo json_encode($response);
     exit;

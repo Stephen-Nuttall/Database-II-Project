@@ -17,6 +17,19 @@ public interface ApiService {
     );
 
     @FormUrlEncoded
+    @POST("item6.php")
+    Call<Responses> getSections(@Field("action") String action);
+
+    @FormUrlEncoded
+    @POST("item6.php")
+    Call<Responses> addTa(
+            @Field("email") String email,
+            @Field("password") String password,
+            @Field("student_id") String studentId,
+            @Field("section") String section
+    );
+
+    @FormUrlEncoded
     @POST("join_club.php")
     Call<Responses> joinClub(
             @Field("club_name") String clubName,

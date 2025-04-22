@@ -7,7 +7,11 @@ public class Responses {
     private boolean reply;
     private String message;
 
+    public List<String> sections;
     public List<String> clubs;
+
+    public String semester;
+    public String year;
     
     public boolean isSuccess() {
         return success;
