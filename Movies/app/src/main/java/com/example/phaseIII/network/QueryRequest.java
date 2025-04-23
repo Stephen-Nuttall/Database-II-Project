@@ -1,4 +1,4 @@
-package com.example.movies;
+package com.example.phaseIII;
 
 import android.util.Log;
 

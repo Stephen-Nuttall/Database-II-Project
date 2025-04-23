@@ -1,12 +1,15 @@
 package com.example.movies.network;
 
+
+import com.example.movies.BuildConfig;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
     //Replace it with your ip and port , so it can work
-    private static final String BASE_URL = "http:/xxxx/phase 3/";
+    private static final String BASE_URL = BuildConfig.BASE_URL;;
 
     private static Retrofit retrofit = null;
 

@@ -1,4 +1,4 @@
-package com.example.movies;
+package com.example.phaseIII.activities;
 
 import android.util.Log;
 
@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.PhaseIII.R;
+import com.example.phaseIII.network.QueryRequest;
 
 public class item1 extends AppCompatActivity {
 

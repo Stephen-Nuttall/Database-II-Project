@@ -1,4 +1,4 @@
-package com.example.movies;
+package com.example.phaseIII;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,10 +8,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.movies.R;
-import com.example.movies.models.Responses;
-import com.example.movies.network.ApiService;
-import com.example.movies.network.RetrofitClient;
+import com.example.PhaseIII.R;
+import com.example.phaseIII.models.Responses;
+import com.example.phaseIII.network.ApiService;
+import com.example.phaseIII.network.RetrofitClient;
 
 import retrofit2.Call;
 import retrofit2.Callback;

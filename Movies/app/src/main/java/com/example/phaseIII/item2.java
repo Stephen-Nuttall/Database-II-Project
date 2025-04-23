@@ -1,8 +1,7 @@
-package com.example.movies;
+package com.example.phaseIII;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,10 +11,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.movies.R;
-import com.example.movies.models.Responses;
-import com.example.movies.network.ApiService;
-import com.example.movies.network.RetrofitClient;
+import com.example.phaseIII.models.Responses;
+import com.example.phaseIII.network.ApiService;
+import com.example.phaseIII.network.RetrofitClient;
 
 import java.util.ArrayList;
 import java.util.List;
