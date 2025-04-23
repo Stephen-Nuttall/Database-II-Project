@@ -155,7 +155,7 @@ function can_register($are_prerequisites_satisfied, $is_space_available_in_secti
     return false;
   }
   if($is_already_registered){
-    echo "Student is already registered.";
+    echo "Student is already registered for this section.";
     return false;
   }
   return true;
