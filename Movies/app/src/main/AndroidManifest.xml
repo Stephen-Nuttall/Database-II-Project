@@ -15,72 +15,46 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".item3"
+            android:name=".activities.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Movies"
-            android:windowSoftInputMode="stateHidden|adjustResize">
+            android:label="Phase III">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
+
+        <activity
+            android:name=".item1"
+            android:exported="true"
+            android:theme="@style/Theme.Movies" />
+
         <activity
             android:name=".item2"
             android:exported="true"
             android:theme="@style/Theme.Movies"
-            android:windowSoftInputMode="stateHidden|adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        
         <activity
-            android:name=".item1"
+            android:name=".item3"
             android:exported="true"
-            android:theme="@style/Theme.Movies">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.Movies"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <activity
             android:name=".item4"
             android:exported="true"
-            android:theme="@style/Theme.Movies">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
+            android:theme="@style/Theme.Movies" />
 
         <activity
             android:name=".activities.ActivityCreateClub"
             android:exported="true"
-            android:theme="@style/Theme.Movies">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:theme="@style/Theme.Movies" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".activities.ActivityClubJoinLeave"
             android:exported="true"
-            android:theme="@style/Theme.Movies">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.Movies" />
 
     </application>
 
