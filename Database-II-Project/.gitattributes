@@ -1,0 +1,41 @@
+# ========== Android/Java Studio ==========
+.idea/
+.gradle/
+local.properties
+*.iml
+*.log
+*.apk
+*.temp
+*.orig
+captures/
+.externalNativeBuild/
+build/
+.cxx/
+
+# ========== IntelliJ/Android Studio cache ==========
+*.iws
+*.ipr
+*.class
+out/
+
+
+
+# ========== Composer (PHP dependency manager) ==========
+vendor/
+composer.lock
+
+# ========== OS-generated files ==========
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ========== VS Code ==========
+.vscode/
+
+# ========== Environment / Secrets ==========
+.env
+.env.*
+*.key
+*.pem
+*.crt

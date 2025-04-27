@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     //Replace it with your ip and port , so it can work
-    private static final String BASE_URL = "http:/xxxx/phase 3/";
+    private static final String BASE_URL = "http://xx.xxx.xx.xxx/Database-II-Project/phase%203/";
 
     private static Retrofit retrofit = null;
 
