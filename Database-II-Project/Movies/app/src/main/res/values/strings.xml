@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Movies</string>
     <!-- change the url in the RetrofitClient file as well under network in the java folder -->
-    <string name="url">http://xxxxx/phase 3/</string>
+    <string name="url">http://xx.xxx.xx.xxx/Database-II-Project/phase%203/</string>
     <string name="submit_query">Submit Query</string>
     <string name="find_the_title_and_length_of_movies_with_input_year">Find the title and length of movies with input year:</string>
     <!-- Strings used for fragments for navigation -->

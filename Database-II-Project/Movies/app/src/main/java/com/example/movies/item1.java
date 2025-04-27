@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +16,9 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.PhaseIII.R;
 import com.example.phaseIII.network.QueryRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class item1 extends AppCompatActivity {
 
@@ -25,6 +29,7 @@ public class item1 extends AppCompatActivity {
     EditText etName;
     RadioGroup radioGroup;
     Button submitQuery;
+    TextView etFeedbackText;
 
     String degree = "undergraduate";
 
@@ -40,6 +45,7 @@ public class item1 extends AppCompatActivity {
         etName = findViewById(R.id.name);
         radioGroup = findViewById(R.id.radioGroup);
         submitQuery = findViewById(R.id.submitQuery);
+        etFeedbackText = findViewById(R.id.feedbackText);
 
         degree = "undergraduate";
 
@@ -87,32 +93,9 @@ public class item1 extends AppCompatActivity {
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-//                        try {
-//                            Log.d("SubmitQueryHelp", response);
-//                            JSONObject jsonResponse = new JSONObject(response);
-//                            boolean success = jsonResponse.getBoolean("success");
-//
-//                            if(success){
-//                                String title = jsonResponse.getString("title");
-//                                int year = jsonResponse.getInt("year");
-//                                int length = jsonResponse.getInt("length");
-//                                String genre = jsonResponse.getString("genre");
-//
-//                                Intent intent = new Intent(MovieQuery.this, PageMovie.class);
-//
-//                                intent.putExtra("title", title);
-//                                intent.putExtra("year", year);
-//                                intent.putExtra("length", length);
-//                                intent.putExtra("genre", genre);
-//
-//                                MovieQuery.this.startActivity(intent);
-//                            } else{
-//                                AlertDialog.Builder builder = new AlertDialog.Builder(MovieQuery.this);
-//                                builder.setMessage("Sign In Failed").setNegativeButton("Retry", null).create().show();
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
+                        Log.d("SubmitQueryHelp", response);
+                        etFeedbackText.setText(response);
+                        Log.d("test", etFeedbackText.getText().toString());
                     }
                 };
 
